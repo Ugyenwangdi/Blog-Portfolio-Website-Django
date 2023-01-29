@@ -1,0 +1,100 @@
+{% extends "base.html" %} {% load static %} {% block title %} John: About {% endblock %} {% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link">Home</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}" class="nav__link">Posts</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:projects' %}#project" class="nav__link">Works</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:about' %}" class="nav__link active">About</a></li>
+{% endblock %}
+
+{% block content %}
+<!--===== ABOUT =====-->
+<section class="about section" id="about">
+    <h2 class="section-title">About</h2>
+
+    <div class="about__container bd-grid">
+        <div class="about__img">
+            <img src="{% static 'assets/img/testimonial1.png' %}" alt="image"> 
+            
+        </div>
+        <div>
+            <h2 class="about__subtitle">Hi, I am John Doe</h2>
+            <span class="about__profession"></span>
+            <span class="about__profession">College Student</span>
+            <p class="about__text">
+                <a href="#" target="_blank">Resume</a>
+            </p>
+            
+        
+            <div class="about__social">
+           
+
+                <a href="https://medium.com" target="_blank" class="about__social-icon"><i class='bx bxl-medium'></i></a>
+                <a href="https://hashnode.com" class="about__social-icon"><i class='bx '><img style="width: 22.4px; height: 22.4px;" src="{% static 'assets/img/hashnode.png' %}" /></i></a> 
+
+
+                <a href="https://dev.to" target="_blank" class="about__social-icon"><i class='bx bxl-dev-to'></i></a>
+
+                <a href="https://www.instagram.com" target="_blank" class="about__social-icon"><i class='bx bxl-instagram' ></i></a>
+
+
+
+                <a href="mailto:wulfi@gmail.com" class="about__social-icon"><i class='bx bxl-gmail'></i></a>
+                
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="about__container bd-grid">
+        <div>
+            <h2 class="more__about__subtitle">A little bit more about me</h2>
+            <p class="about__text">{{ profiles.bio |linebreaks }}</p>
+        </div>
+
+        <div class="more__about__container">
+            <img src="{% static 'assets/img/perfil.png' %}" alt="" class="more__about__img">
+            <hr class="line">
+        </div>
+    </div>
+
+</section>
+
+<!--==================== CONTACT ME ====================-->
+<section class="contact section" id="contact">
+    <h2 class="section-title">Contact</h2>
+
+    <div class="contact__container bd-grid">
+        <p class="contact_message">Let us get in touch and help each other</p>
+
+        <div class="contact__info">
+            <h3 class="contact__subtitle">EMAIL</h3>
+            <span class="contact__text">email@gmail.com</span>
+
+            <h3 class="contact__subtitle">PHONE</h3>
+            <span class="contact__text">+000 00000000</span>
+
+            {% comment %} <h3 class="contact__subtitle">ADDRESS</h3>
+            <span class="contact__text">Not to be confused with Bataan, Bohtan, or Butuan. Coordinates: 27°25′01″N 90°26′06″E</span> {% endcomment %}
+        </div>
+
+        {% for message in messages %}
+        <p class="message_sent">{{ message }}</p>
+        {% endfor %}
+
+        <form action="{% url 'wulfi:about' %}" method="post" class="contact__form">
+            {% csrf_token %}
+            <input type="name" name="name" placeholder="Name" class="contact__input">
+            <input type="email" name="email" placeholder="Email" class="contact__input">
+            <textarea name="message" id="" placeholder="Enter your message" cols="0" rows="10" class="contact__input"></textarea>
+            <!-- <input type="button" value="Enter" class="contact__button button"> -->
+            <button type="submit" class="contact__button button">Send</button>
+        </form>
+
+
+    </div>
+
+
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% load static %} {% block title %} John: Contact {% endblock %} {% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link">Home</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}" class="nav__link">Posts</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:about' %}" class="nav__link">About</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:contact' %}" class="nav__link active">Contact</a></li>
+{% endblock %}
+<!-- {% block img %}
+<image class="home_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}" />{% endblock %}  -->
+{% block content %}
+<!--==================== CONTACT ME ====================-->
+<section class="contact section" id="contact">
+    <h2 class="section-title">Contact</h2>
+
+    <div class="contact__container bd-grid">
+        <p class="contact_message">Let us get in touch and help each other!</p>
+
+        <div class="contact__info">
+            <h3 class="contact__subtitle">EMAIL</h3>
+            <span class="contact__text">info.mail.com</span>
+
+            <h3 class="contact__subtitle">PHONE</h3>
+            <span class="contact__text">+10 555-999</span>
+
+            <h3 class="contact__subtitle">ADDRESS</h3>
+            <span class="contact__text">Bhutan</span>
+        </div>
+
+        {% for message in messages %}
+        <p class="message_sent">{{ message }}</p>
+        {% endfor %}
+
+        <form action="{% url 'wulfi:contact' %}" method="post" class="contact__form">
+            {% csrf_token %}
+            <input type="name" name="name" placeholder="Name" class="contact__input">
+            <input type="email" name="email" placeholder="Email" class="contact__input">
+            <textarea name="message" id="" placeholder="Enter your message" cols="0" rows="10" class="contact__input"></textarea>
+            <!-- <input type="button" value="Enter" class="contact__button button"> -->
+            <button type="submit" class="contact__button button">Enter</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

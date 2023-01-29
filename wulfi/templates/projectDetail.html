@@ -1,0 +1,37 @@
+{% extends "base.html" %} {% load static %} {% block title %} John {% endblock %}
+{% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link">Home</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}" class="nav__link" id="post">Posts</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}#project" class="nav__link">Works</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:about' %}" class="nav__link">About</a></li>
+{% endblock %}
+<!-- {% block img %}
+
+<image class="home_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}" />{% endblock %}  -->
+{% block content %}
+
+
+<div class="container">
+    <div class="col bg-secondary text-white">
+        <h2 class="row justify-content-center text-uppercase p-4">Project Detail</h2>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col">
+
+            <a href="{% url 'wulfi:home' %}" class="btn btn-outline-dark my-3"  style="color: #9a9494;">Go Back</a>
+
+
+            <div style="height: 90vh; margin-bottom: 100px;">
+                {% comment %} <img style="max-width: 100%; max-height: 100%;" src="{{project.image}}"> {% endcomment %}
+
+                <p style="padding: 10px;">{{project.description }}</p>
+
+                <a href="{{project.link}}" class="btn btn-outline-dark my-3" style="color: #9a9494;">Link</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

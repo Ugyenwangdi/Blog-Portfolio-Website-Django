@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% load static %} {% block title %} John: Login {% endblock %} {% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link">Home</a></li>
+<li class="nav__item"><a href="{% url 'accounts:register' %}" class="nav__link ">Register</a></li>
+<li class="nav__item"><a href="{% url 'accounts:login' %}" class="nav__link active">Login</a></li>
+{% endblock %}
+<!-- {% block img %}
+<image class="home_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}" />{% endblock %}  -->
+
+{% block content %}
+<!--===== ABOUT =====-->
+<section class="about section" id="about">
+    <h2 class="section-title">Login</h2>
+
+    <div class="contact__container bd-grid">
+        {% for message in messages %}
+        <h3>{{ message }}</h3>
+        {% endfor %}
+    </div>
+
+    <div class="register__container bd-grid">
+        <form action="login" class="register__form" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="username" class="register__input"><br>
+            <input type="password" name="password" placeholder="password" class="register__input"><br>
+            <button type="submit" class="register__button button">Login</button>
+        </form>
+    </div>
+
+</section>
+{% endblock %}

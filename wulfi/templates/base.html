@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ===== Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+    <!-- =====BOX ICONS===== -->
+    <!-- <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'> -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+
+    <!--==================== CSS ====================-->
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}">
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}">
+
+
+    <title>{% block title %}{% endblock %}</title>
+    {% block stl %}{% endblock %}
+
+</head>
+
+<body>
+    <!--==================== HEADER ====================-->
+    <header class="l-header" id="header">
+        <nav class="nav bd-grid">
+            <div>
+                <a href="{% url 'wulfi:home' %}" class="nav__logo"><h4><b>John</b></h4></a>
+            </div>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+
+                    {% block nav %} {% endblock %}
+
+                </ul>
+            </div>
+
+            <div class="nav_btns">
+                <!-- Theme change button -->
+                <i class="bx bx-moon" id="icon"></i>
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+
+            </div>
+        </nav>
+
+    </header>
+
+    <!--==================== MAIN ====================-->
+    <main class="l-main">
+        <!--==================== HOME ====================-->
+
+        <section class="home section" id="home">
+
+            <div class="home__container bd-grid">
+                <div class="home__img">
+                    <svg class="home_blob" viewBox="0 0 200 187" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <mask id="mask0" mask-type="alpha">
+                                <path class="blob_fill_color" d="M51,-67.9C62.9,-61.5,67.2,-42.4,67.5,-25.7C67.8,-8.9,64.1,5.4,58.9,18.4C53.6,31.4,46.8,43.2,36.7,53.2C26.6,63.2,13.3,71.6,0.9,70.3C-11.5,69.1,-23,58.4,-31.3,47.7C-39.5,37.1,-44.4,26.5,-49.5,15.1C-54.6,3.6,-59.9,-8.8,-58.4,-20.6C-56.8,-32.5,-48.4,-43.8,-37.5,-50.4C-26.7,-57.1,-13.3,-59.2,3.1,-63.4C19.5,-67.7,39.1,-74.2,51,-67.9Z" transform="translate(100 100)" />
+                            </mask>
+                            <g mask="url(#mask0)">
+                                <path class="blob_fill_color" d="M51,-67.9C62.9,-61.5,67.2,-42.4,67.5,-25.7C67.8,-8.9,64.1,5.4,58.9,18.4C53.6,31.4,46.8,43.2,36.7,53.2C26.6,63.2,13.3,71.6,0.9,70.3C-11.5,69.1,-23,58.4,-31.3,47.7C-39.5,37.1,-44.4,26.5,-49.5,15.1C-54.6,3.6,-59.9,-8.8,-58.4,-20.6C-56.8,-32.5,-48.4,-43.8,-37.5,-50.4C-26.7,-57.1,-13.3,-59.2,3.1,-63.4C19.5,-67.7,39.1,-74.2,51,-67.9Z" transform="translate(100 100)" />
+                                <a href="{% url 'wulfi:home' %}"><image class="about_blob-img" x="40" y="18" xlink:href="{% static 'assets/img/profile-pic.png' %}"/> </a>
+                                
+                            </g>
+                        </svg>
+                </div>
+
+                <div class="home_social_box">
+                    <a href="{% url 'wulfi:home' %}">
+                        <h2 class="home__subtitle">John</h2>
+                    </a>
+
+                    <div class="home__social">
+                        
+                        <a href="https://github.com" target="_blank" class="home__social-icon"><i class='bx bxl-github'></i></a>
+
+                        <a href="{{ profiles.twitter }}" target="_blank" class="home__social-icon"><i class='bx bxl-twitter' ></i></a>
+                        <a href="https://www.linkedin.com/" target="_blank" class="home__social-icon"><i class='bx bxl-linkedin-square'></i></a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+        <section class="section">
+
+            <div class="Box">
+                <div class="Inner_Box">
+
+                    <h1 class="bannergreeting">{{ banner.greeting }}</h1>
+
+                    <p class="bannerbody">{{ banner.body }} </p>
+
+                </div>
+
+            </div>
+            
+
+
+        </section>
+
+        <!-- =============  BLOCK CONTENT ======== -->
+        {% block content %} {% endblock %}
+        <div class="sp" style="text-align: center; margin-top: 5rem; visibility: hidden;">
+        </div>
+
+    </main>
+
+    <!--==================== FOOTER ====================-->
+    <footer class="footer">
+        <div class="footer__login_box">
+
+            {% if request.user.is_authenticated %}
+            <p>Hello, {{request.user}}</p>
+            <a href="{% url 'accounts:logout' %}" class="login_link">Logout</a> {% else %}
+            <a href="{% url 'accounts:register' %}" class="login_link">Register</a>
+            <a href="{% url 'accounts:login' %}" class="login_link">Login</a>{% endif %}
+        </div>
+
+        <p class="footer__title">John</p>
+        <div class="footer__social">
+            
+            <a href="https://github.com" target="_blank" class="footer__icon"><i class='bx bxl-github'></i></a>
+            
+            <a href="#" target="_blank" class="footer__icon"><i class='bx bxl-twitter' ></i></a>
+
+            <a href="https://www.linkedin.com" target="_blank" class="footer__icon"><i class='bx bxl-linkedin-square'></i></a>
+
+        </div>
+
+        <div class="footer__data">
+            <p class="footer__explore">Explore</p>
+            <ul>
+                <li><a href="{% url 'wulfi:home' %}" class="footer__link">Home</a></li>
+                <li><a href="{% url 'wulfi:posts' %}" class="footer__link">Posts</a></li>
+                <li><a href="{% url 'wulfi:projects' %}#project" class="footer__link">Works</a></li>
+                <li><a href="{% url 'wulfi:about' %}" class="footer__link">About</a></li>
+            </ul>
+        </div>
+
+        <p class="footer_copy_right">Copyright &#169; 2022 John. </p>
+
+
+    </footer>
+
+    <!--===== SCROLL REVEAL =====-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!---JS CDN Link-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!--==================== MAIN JS ====================-->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+
+</html>

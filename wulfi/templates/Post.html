@@ -1,0 +1,98 @@
+{% extends "base.html" %} {% load static %} {% block title %} John: {{ post.headline }} {% endblock %} {% block stl %}
+<style type="text/css">
+    img {
+        max-width: 100%;
+        object-fit: cover;
+    }
+    
+    .featured_image {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .post-container {
+        width: 900px;
+        margin: 0 auto;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .author-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    
+    @media screen and (max-width: 900px) {
+        .post-container {
+            width: 95%;
+        }
+    }
+</style>
+{% endblock %} {% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link">Home</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}" class="nav__link active">Posts</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:projects' %}#project" class="nav__link">Works</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:about' %}" class="nav__link">About</a></li>
+{% endblock %}
+<!-- {% block img %}
+
+<image class="home_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}" />{% endblock %}  -->
+{% block content %}
+<!-- ================== POST ========================= -->
+
+<section class="post section" id="post">
+
+    <div class="post-container ">
+        <!-- <img class="featured_img" src="{{ post.image.url }}"> -->
+        <img class="featured_img" src="{% static 'assets/img/work4.jpg' %}">
+        <!-- start post details -->
+        <div class="post-info">
+            <div class="post-info-content display-center">
+                <div class="display-center">
+                    <!-- {{ post.author.profile_pic.url }} -->
+                    <img class="author-pic img" src="{% static 'assets/img/photo3.png' %}" alt="">
+                    <h6>Posted by {{ post.author }} <small>{{ post.publish|date }} {{ post.publish|time}}</small></h6>
+                </div>
+
+                <div class="post-meta">
+                    {% for tag in post.tags.all %}
+                    <span class="tag"><a href="{% url 'wulfi:posts' %}?query={{ tag.name }}">{{ tag.name }}</a></span> {% endfor %}
+
+                    <a class="back-button" href="{% url 'wulfi:posts' %}">All Posts</a>
+                </div>
+            </div>
+        </div>
+        <!-- end of post details -->
+        <hr>
+        <h1>{{ post.headline }} </h1>
+        <p>{{ post.post_views }} views</p>
+        <h4>{{ article.sub_headline }}</h4>
+        <br>
+        <p>{{ post.body|safe }}</p>
+        <!-- 
+        <h3>Comments</h3>
+
+        {% if not post.comments.all %}
+        <p>No comments yet</p>
+        {% endif %} {% for comment in post.comments.all %}
+        <article>
+            <b>{{ comment.name }} </b><small>{{ comment.date_added }}</small><br> {{ comment.body }}
+        </article>
+        {% endfor %}
+
+        <h5>Add a comment</h5>
+
+        <form method="post" action=".">
+            {% csrf_token %} {{ form.as_p }} {% if user.is_authenticated %}
+            <input type="submit" value="Add comment"> {% else %}
+            <h3>Login to add a comment</h3>
+            {% endif %}
+        </form> -->
+
+
+    </div>
+
+</section>
+{% endblock %}

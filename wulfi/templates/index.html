@@ -1,0 +1,214 @@
+{% extends "base.html" %} {% load static %} {% block title %} John {% endblock %} 
+{% block stl %}
+<style type="text/css">
+    .tweet-body {
+        margin: 0;
+        padding: 0;
+        background: rgb(255, 255, 255);
+        border-radius: 10px;
+    }
+
+    .scroll-bg {
+        background: rgb(17, 17, 105);
+        margin: 10% auto;
+        padding: 30px;
+        border-radius: 10px;
+    }
+    .scroll-div {
+        background: rgb(17, 17, 105);
+        height: 420px;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+    .scroll-object {
+        color: wheat;
+        padding: 20px;
+    }
+</style>
+{% endblock %}
+{% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link active">Home</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}" class="nav__link" id="post">Posts</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:projects' %}#project" class="nav__link">Works</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:about' %}" class="nav__link">About</a></li>
+{% endblock %}
+<!-- {% block img %}
+
+<image class="home_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}" />{% endblock %}  -->
+{% block content %}
+<!--==================== EXPLORE ====================-->
+<section class="explore section" id="explore">
+
+    <div class="explore__container">
+
+        <h3 class="explore-title" id="post">Explore Categories</h3>
+
+        <div class="explore__box">
+            <!-- for tag in tags -->
+            {% for tag in randomtags %}
+            <span class="explore__name"><a href="?query={{ tag }}" class="__link">{{ tag }}</a></span> {% endfor %}
+        </div>
+
+    </div>
+
+
+
+</section>
+<hr class="line bd-grid">
+
+
+<!--==================== SEARCH POSTS BY CATEGORY ====================-->
+<section class="featured" id="featured">
+    <div class="featured__container bd-grid">
+
+        <!-- If we search by using tags, show this -->
+        {% if query %}
+        <h2 class="explore-title">Results matching {{query}}</h2>
+
+        <div class="featured-content">
+            {% for post in posts %}
+            <!-- item -->
+            <div class="featured-item">
+                <div class="featured-img">
+                    <a href="{{ post.get_absolute_url }}">
+                        <!-- <img src="{{post.image.url}}" alt=""> -->
+                        <img src="{% static 'assets/img/work4.jpg' %}" alt="">
+                        <span class="date"><i class='bx bx-calendar-star'></i>{{ post.publish|date:"M Y" }}</span>
+                        <span class="post_subhead">{{ post.sub_headline }}</span>
+                    </a>
+
+                </div>
+                <div class="featured-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.headline }}</a>
+                </div>
+            </div>
+            <!-- end of item -->
+            {% empty %}
+            <p>No Results found...</p>
+
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!--==================== FEATURED POSTS ====================-->
+<section class="featured section" id="featured">
+    <div class="featured__container bd-grid">
+        <h2 class="section-title">Featured Posts</h2>
+
+        <div class="featured-content">
+            {% for post in featured %}
+            <!-- item -->
+            <div class="featured-item">
+                <div class="featured-img">
+                    <a href="{{ post.get_absolute_url }}">
+                        <!-- <img src="{{post.image.url}}" alt=""> -->
+                        <img src="{% static 'assets/img/work4.jpg' %}" alt="">
+                        <span class="date"><i class='bx bx-calendar-star'></i>{{ post.publish|date:"M Y" }}</span>
+                        <span class="post_subhead">{{ post.sub_headline }}</span>
+                    </a>
+
+                </div>
+                <div class="featured-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.headline }}</a>
+                </div>
+            </div>
+            <!-- end of item -->
+            {% empty %}
+            <h3>No Featured Posts at the Moment...</h3>
+
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<!-- Projects -->
+<section class="project section" id="project">
+    <div class="project__container bd-grid">
+        {% if categoryname %}
+        <h2 class="section-title">{{categoryname}} Projects</h2>
+        {% else %}
+        <h2 class="section-title">Projects</h2>
+        {% endif %}
+        <div class="row">
+
+            <div class="col">
+                <div class="row">
+
+                    <div class="project-content col">
+                        {% for project in projects %}
+
+                        <div class="project-item card my-2">
+                            <img class="image-thumbnail" src="{% static 'assets/img/portfolio2.jpg' %}" alt="Card image cap">
+
+                            <div class="card-body">
+                                <small style="color: black;">{{project.title}}</small>
+                            </div>
+                            <a href="{% url 'wulfi:project' project.id %}" class="btn btn-outline-dark btn-sm m-1">View</a>
+                        </div>
+                        {% empty %}
+                        <h3>No projects yet...</h3>
+                        {% endfor %}
+
+
+                    </div>
+                    
+
+
+                </div>
+            </div>
+
+            {% comment %} <div class="col-md-3">
+                <div class="category card">
+                    <div class="card-header bg-secondary">
+                        <p class="row text-uppercase text-white pt-2 justify-content-center">Categories</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="{% url 'wulfi:home' %}">All</a>
+                        </li>
+
+                        {% for category in categories %}
+                        <li class=" list-group-item">
+                            <a href="{% url 'wulfi:home' %}?category={{category.name}}">
+                        {{category.name}}
+                    </a>
+                        </li>
+                        {% endfor %}
+
+                        <!-- <a href="" class="btn btn-dark btn-block btn-sm m-1">Add Photo</a> -->
+
+                    </ul>
+                </div>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</section>
+
+
+<!--==================== ABOUT ====================-->
+<section class="about section" id="about">
+    <h2 class="section-title">Hey, I am John</h2>
+
+    <div class="about__container bd-grid">
+        <div class="about__img">
+            <img src="{% static 'assets/img/testimonial1.png' %}" alt="image">
+            
+        </div>
+
+        <div>
+
+            <span class="about__profession"><h2 class="about__subtitle">College Student</h2></span>
+            <p class="about__text">An API lover. I have a great passion for Back-End Development and programming in general because it allows me to be inquisitive and resourceful in my work. I'm constantly striving to better myself in this field so that I can one day reach the level of success that I dream of.<br><br><a href="{% url 'wulfi:about' %}" class="details_btn">more details</a></p>
+            
+        </div>
+    </div>
+
+</section>
+
+
+
+
+{% endblock %}

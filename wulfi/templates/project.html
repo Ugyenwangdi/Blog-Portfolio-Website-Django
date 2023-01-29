@@ -1,0 +1,191 @@
+{% extends "base.html" %} {% load static %} {% block title %} John {% endblock %} {% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link">Home</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}" class="nav__link" id="post">Posts</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}#project" class="nav__link active">Works</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:about' %}" class="nav__link">About</a></li>
+{% endblock %}
+<!-- {% block img %}
+
+<image class="home_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}" />{% endblock %}  -->
+{% block content %}
+<!--==================== EXPLORE ====================-->
+<section class="explore section" id="explore">
+
+    <div class="explore__container">
+
+        <h3 class="explore-title" id="post">Explore Categories</h3>
+
+        <div class="explore__box">
+            <!-- for tag in tags -->
+            {% for tag in randomtags %}
+            <span class="explore__name"><a href="?query={{ tag }}" class="__link">{{ tag }}</a></span> {% endfor %}
+        </div>
+
+    </div>
+
+
+
+</section>
+<hr class="line bd-grid">
+
+
+<!--==================== SEARCH POSTS BY CATEGORY ====================-->
+<section class="featured" id="featured">
+    <div class="featured__container bd-grid">
+
+        <!-- If we search by using tags, show this -->
+        {% if query %}
+        <h2 class="explore-title">Results matching {{query}}</h2>
+
+        <div class="featured-content">
+            {% for post in posts %}
+            <!-- item -->
+            <div class="featured-item">
+                <div class="featured-img">
+                    <a href="{{ post.get_absolute_url }}">
+                        <!-- <img src="{{post.image.url}}" alt=""> -->
+                        <img src="{% static 'assets/img/work4.jpg' %}" alt="">
+                        <span class="date"><i class='bx bx-calendar-star'></i>{{ post.publish|date:"M Y" }}</span>
+                        <span class="post_subhead">{{ post.sub_headline }}</span>
+                    </a>
+
+                </div>
+                <div class="featured-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.headline }}</a>
+                </div>
+            </div>
+            <!-- end of item -->
+            {% empty %}
+            <p>No Results found...</p>
+
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!--==================== FEATURED POSTS ====================-->
+<section class="featured section" id="featured">
+    <div class="featured__container bd-grid">
+        <h2 class="section-title">Featured Posts</h2>
+
+        <div class="featured-content">
+            {% for post in featured %}
+            <!-- item -->
+            <div class="featured-item">
+                <div class="featured-img">
+                    <a href="{{ post.get_absolute_url }}">
+                        <!-- <img src="{{post.image.url}}" alt=""> -->
+                        <img src="{% static 'assets/img/work4.jpg' %}" alt="">
+                        <span class="date"><i class='bx bx-calendar-star'></i>{{ post.publish|date:"M Y" }}</span>
+                        <span class="post_subhead">{{ post.sub_headline }}</span>
+                    </a>
+
+                </div>
+                <div class="featured-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.headline }}</a>
+                </div>
+            </div>
+            <!-- end of item -->
+            {% empty %}
+            <h3>No Featured Posts at the Moment...</h3>
+
+            {% endfor %}
+        </div>
+
+    </div>
+</section>
+
+<!-- Projects -->
+<section class="project section" id="project">
+    <div class="project__container bd-grid">
+        {% if categoryname %}
+        <h2 class="section-title">{{categoryname}} Projects</h2>
+        {% else %}
+        <h2 class="section-title">Projects</h2>
+        {% endif %}
+        <div class="row">
+
+            <div class="col">
+                <div class="row">
+
+                    <div class="project-content col">
+                        {% for project in projects %}
+
+                        <div class="project-item card my-2">
+                            <img class="image-thumbnail" src="{% static 'assets/img/portfolio2.jpg' %}" alt="Card image cap">
+
+                            <div class="card-body">
+                                <small style="color: black;">{{project.title}}</small>
+                            </div>
+                            <a href="{% url 'wulfi:project' project.id %}" class="btn btn-outline-dark btn-sm m-1">View</a>
+                        </div>
+                        {% empty %}
+                        <h3>No projects yet...</h3>
+                        {% endfor %}
+
+
+                    </div>
+                    
+
+
+                </div>
+            </div>
+
+            {% comment %} <div class="col-md-3">
+                <div class="category card">
+                    <div class="card-header bg-secondary">
+                        <p class="row text-uppercase text-white pt-2 justify-content-center">Categories</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a href="{% url 'wulfi:home' %}">All</a>
+                        </li>
+
+                        {% for category in categories %}
+                        <li class=" list-group-item">
+                            <a href="{% url 'wulfi:home' %}?category={{category.name}}">
+                        {{category.name}}
+                    </a>
+                        </li>
+                        {% endfor %}
+
+                        <!-- <a href="" class="btn btn-dark btn-block btn-sm m-1">Add Photo</a> -->
+
+                    </ul>
+                </div>
+            </div> {% endcomment %}
+        </div>
+    </div>
+</section>
+
+
+<!--==================== ABOUT ====================-->
+<section class="about section" id="about">
+    <h2 class="section-title">Hey, I am John</h2>
+
+    <div class="about__container bd-grid">
+        <div class="about__img">
+            <img src="{% static 'assets/img/testimonial1.png' %}" alt="image">
+            <!-- <svg class="about_blob" viewBox="0 0 200 187" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <mask id="mask0" mask-type="alpha">
+                        <path class="blob_fill_color" d="M51,-67.9C62.9,-61.5,67.2,-42.4,67.5,-25.7C67.8,-8.9,64.1,5.4,58.9,18.4C53.6,31.4,46.8,43.2,36.7,53.2C26.6,63.2,13.3,71.6,0.9,70.3C-11.5,69.1,-23,58.4,-31.3,47.7C-39.5,37.1,-44.4,26.5,-49.5,15.1C-54.6,3.6,-59.9,-8.8,-58.4,-20.6C-56.8,-32.5,-48.4,-43.8,-37.5,-50.4C-26.7,-57.1,-13.3,-59.2,3.1,-63.4C19.5,-67.7,39.1,-74.2,51,-67.9Z" transform="translate(100 100)" />
+                    </mask>
+                    <g mask="url(#mask0)">
+                        <path class="blob_fill_color" d="M51,-67.9C62.9,-61.5,67.2,-42.4,67.5,-25.7C67.8,-8.9,64.1,5.4,58.9,18.4C53.6,31.4,46.8,43.2,36.7,53.2C26.6,63.2,13.3,71.6,0.9,70.3C-11.5,69.1,-23,58.4,-31.3,47.7C-39.5,37.1,-44.4,26.5,-49.5,15.1C-54.6,3.6,-59.9,-8.8,-58.4,-20.6C-56.8,-32.5,-48.4,-43.8,-37.5,-50.4C-26.7,-57.1,-13.3,-59.2,3.1,-63.4C19.5,-67.7,39.1,-74.2,51,-67.9Z" transform="translate(100 100)" />
+                        <image class="about_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}"/> 
+                        <image class="about_blob-img" x="40" y="18" xlink:href="{% static 'assets/img/photo3.png' %}"/>
+                    </g>
+                </svg> -->
+        </div>
+
+        <div>
+
+            <span class="about__profession"><h2 class="about__subtitle">Student</h2></span>
+            <p class="about__text">Information Technology Student.<br><br><a href="{% url 'wulfi:about' %}" class="details_btn">more details</a></p>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

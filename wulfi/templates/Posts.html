@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% load static %} {% block title %} John: Posts {% endblock %} {% block nav %}
+<li class="nav__item"><a href="{% url 'wulfi:home' %}" class="nav__link">Home</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:posts' %}" class="nav__link active">Posts</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:projects' %}#project" class="nav__link">Works</a></li>
+<li class="nav__item"><a href="{% url 'wulfi:about' %}" class="nav__link">About</a></li>
+{% endblock %}
+<!-- {% block img %}
+<image class="home_blob-img" x="40" y="18" xlink:href="{{ profiles.profile_pic.url }}" />{% endblock %}  -->
+{% block content %}
+<!-- ================ALL POSTS ============== -->
+<section class="posts section" id="posts">
+
+    <div class="posts__container bd-grid">
+        <h2 class="section-title">All Posts</h2>
+
+        <form method="GET" class="form">
+            <input type="text" id="query" name="query" class="textbox" placeholder="Search">
+            <button type="submit" class="posts_button">
+                <i class='bx bx-search'></i>
+            </button>
+
+            <div class="article-meta">
+
+                <!-- for tag in tags -->
+                <a class="back-button" href="{% url 'wulfi:posts' %}">All</a> {% for tag in randomtags %}
+                <span class="tag"><a href="?query={{ tag }}">{{ tag }}</a></span> {% endfor %}
+            </div>
+        </form>
+
+        <hr>
+
+        <!-- <p>All the posts here are from 'djangoproject.com', It's used for the test purpose. It will be removed soon. This project is still in testing .....</p> -->
+
+        <div class="featured-content">
+
+            {% for post in posts %}
+            <!-- item -->
+            <div class="featured-item">
+                <div class="featured-img">
+                    <a href="{{ post.get_absolute_url }}">
+                        <!-- <img src="{{ post.image.url }}" alt=""> -->
+                        <img src="{% static 'assets/img/work4.jpg' %}" alt="">
+                        <span class="date"><i class='bx bx-calendar-star'></i>{{ post.publish|date:"M Y" }}</span>
+                        <span class="post_subhead">{{ post.sub_headline }}</span>
+                    </a>
+                </div>
+                <div class="featured-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.headline }}</a>
+                </div>
+            </div>
+            <!-- end of item -->
+            {% empty %}
+            <h3>No Posts found...</h3>
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}
